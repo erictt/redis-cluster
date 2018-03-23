@@ -3,11 +3,11 @@ A [redis cluster](https://redis.io/topics/cluster-tutorial) running in Kubernete
 
 If the cluster configuration of a redis node is lost in some way, it will come back with a different ID, which upsets the balance in the cluster (and probably in the Force). To prevent this, the setup uses a combination of Kubernetes StatefulSets and PersistentVolumeClaims to make sure the state of the cluster is maintained after rescheduling or failures.
 
-## Setup (using minikube)
-1. `minikube start`
-2. `eval $(minikube docker-env)`
+## Setup 
 3. `docker build -t redis-cluster:v1 .`
-4. `kubectl apply -f redis-cluster.yml`
+4. `docker tag redis-cluster:v1 us.gcr.io/nyt-china-dev/redis-cluster:v1`
+5. `gcloud docker -- push us.gcr.io/nyt-china-dev/redis-cluster`
+6. `kubectl apply -f redis-cluster.yml`
 
 This will spin up 6 `redis-cluster` pods one by one, which may take a while. After all pods are in a running state, you can itialize the cluster using the `redis-trib` command in any of the pods. After the initialization, you will end up with 3 master and 3 slave nodes.
 ``` bash

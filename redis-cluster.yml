@@ -51,7 +51,7 @@ spec:
     spec:
       containers:
       - name: redis-cluster
-        image: redis-cluster:v1
+        image: us.gcr.io/nyt-china-dev/redis-cluster:v1
         ports:
         - containerPort: 6379
           name: client
@@ -86,7 +86,7 @@ spec:
       - name: conf
         configMap:
           name: redis-cluster
-          items: 
+          items:
           - key: redis.conf
             path: redis.conf
   volumeClaimTemplates:
